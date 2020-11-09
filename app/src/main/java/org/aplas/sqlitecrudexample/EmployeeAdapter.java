@@ -2,6 +2,7 @@ package org.aplas.sqlitecrudexample;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
@@ -36,41 +37,7 @@ public class EmployeeAdapter extends ArrayAdapter<Employee> {
         this.employeeList = employeeList;
         this.mDatabase = mDatabase;
     }
-
-    @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        LayoutInflater inflater = LayoutInflater.from(mCtx);
-        View view = inflater.inflate(listLayoutRes, null);
-
-        final Employee employee = employeeList.get(position);
-
-
-        TextView textViewName = view.findViewById(R.id.textViewName);
-        TextView textViewDept = view.findViewById(R.id.textViewDepartment);
-        TextView textViewSalary = view.findViewById(R.id.textViewSalary);
-        TextView textViewJoiningDate = view.findViewById(R.id.textViewJoiningDate);
-
-
-        textViewName.setText(employee.getName());
-        textViewDept.setText(employee.getDept());
-        textViewSalary.setText(String.valueOf(employee.getSalary()));
-        textViewJoiningDate.setText(employee.getJoiningDate());
-
-
-        Button buttonDelete = view.findViewById(R.id.buttonDeleteEmployee);
-        Button buttonEdit = view.findViewById(R.id.buttonEditEmployee);
-
-        //adding a clicklistener to button
-        buttonEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                updateEmployee(employee);
-            }
-        });
-
-        return view;
-    }
-
+    
     private void updateEmployee(final Employee employee) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(mCtx);
 
@@ -124,6 +91,65 @@ public class EmployeeAdapter extends ArrayAdapter<Employee> {
 
 
     }
+    @NonNull
+    @Override
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        LayoutInflater inflater = LayoutInflater.from(mCtx);
+        View view = inflater.inflate(listLayoutRes, null);
+
+        final Employee employee = employeeList.get(position);
+
+
+        TextView textViewName = view.findViewById(R.id.textViewName);
+        TextView textViewDept = view.findViewById(R.id.textViewDepartment);
+        TextView textViewSalary = view.findViewById(R.id.textViewSalary);
+        TextView textViewJoiningDate = view.findViewById(R.id.textViewJoiningDate);
+
+
+        textViewName.setText(employee.getName());
+        textViewDept.setText(employee.getDept());
+        textViewSalary.setText(String.valueOf(employee.getSalary()));
+        textViewJoiningDate.setText(employee.getJoiningDate());
+
+
+        Button buttonDelete = view.findViewById(R.id.buttonDeleteEmployee);
+        Button buttonEdit = view.findViewById(R.id.buttonEditEmployee);
+
+        //adding a clicklistener to button
+        buttonEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateEmployee(employee);
+            }
+        });
+
+        //the delete operation
+        buttonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(mCtx);
+                builder.setTitle("Are you sure?");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String sql = "DELETE FROM employees WHERE id = ?";
+                        mDatabase.execSQL(sql, new Integer[]{employee.getId()});
+                        reloadEmployeesFromDatabase();
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
+
+        return view;
+    }
 
     private void reloadEmployeesFromDatabase() {
         Cursor cursorEmployees = mDatabase.rawQuery("SELECT * FROM employees", null);
@@ -142,4 +168,5 @@ public class EmployeeAdapter extends ArrayAdapter<Employee> {
         cursorEmployees.close();
         notifyDataSetChanged();
     }
+
 }

@@ -3,19 +3,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:padding="8dp">
+    android:padding="8dp"
+    android:background="#f6830f">
 
     <LinearLayout
-        android:layout_width="230dp"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="5dp">
 
         <TextView
             android:id="@+id/textViewName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="#FFFFFF"
             android:text="Belal Khan"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
@@ -23,13 +29,19 @@
             android:id="@+id/textViewDepartment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:text="Technical"
+            android:textColor="#FFFFFF"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
         <TextView
             android:id="@+id/textViewSalary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:textColor="#FFFFFF"
             android:text="INR 40000"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
@@ -37,7 +49,11 @@
             android:id="@+id/textViewJoiningDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="#FFFFFF"
             android:text="2017-09-30 10:00:00" />
 
     </LinearLayout>
@@ -52,7 +68,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:background="@color/colorPrimary"
+            android:textColor="#FFFFFF"
+            android:background="#0e918c"
             android:text="Edit" />
 
         <Button
@@ -60,7 +77,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:background="@color/colorAccent"
+            android:textColor="#FFFFFF"
+            android:background="#bb2205"
             android:text="Delete" />
 
     </LinearLayout>
